@@ -41,4 +41,3 @@ if __name__ == "__main__":
     app = Main()
     app.attributes('-fullscreen', True)
     app.mainloop()
-

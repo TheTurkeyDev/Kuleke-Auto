@@ -1,10 +1,18 @@
 import tkinter as tk
+import obd
 
 
 class SystemInfoMenu(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        b = tk.Button(self, justify=tk.LEFT)
-        self.photo = tk.PhotoImage(file="res/icons/nav_icon_96.png")
-        b.config(image=self.photo, width="96", height="96")
-        b.pack(side=tk.LEFT)
+
+        connection = obd.OBD()
+
+        listbox = tk.Listbox(self)
+        listbox.config(width="128", height="128")
+        listbox.grid(row=0, column=1)
+
+        listbox.insert(tk.END, "Available Commands")
+
+        for item in connection.supported_commands:
+            listbox.insert(tk.END, item)

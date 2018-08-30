@@ -33,6 +33,8 @@ class MainMenu(tk.Frame):
         b.grid(row=1, column=1)
 
     def button_callback(self, buttonID):
-        if buttonID == 3:
+        if buttonID == 1:
+            self.controller.show_frame("SystemInfoMenu")
+        elif buttonID == 3:
             self.controller.show_frame("SettingsMenu")
 
