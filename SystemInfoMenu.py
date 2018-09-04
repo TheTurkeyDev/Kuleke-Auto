@@ -9,7 +9,7 @@ class SystemInfoMenu(tk.Frame):
 
         connection = obd.OBD()
 
-        self.test_gauge = gauge.Gauge(self, 0, 100)
+        self.test_gauge = gauge.Gauge(self, 0, 100, 10 , 5)
 
         for item in connection.supported_commands:
             print(item)
