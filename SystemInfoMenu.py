@@ -1,5 +1,6 @@
 import tkinter as tk
 import obd
+import widgets.Gauge as gauge
 
 
 class SystemInfoMenu(tk.Frame):
@@ -8,11 +9,7 @@ class SystemInfoMenu(tk.Frame):
 
         connection = obd.OBD()
 
-        listbox = tk.Listbox(self)
-        listbox.config(width="128", height="128")
-        listbox.grid(row=0, column=1)
-
-        listbox.insert(tk.END, "Available Commands")
+        self.test_gauge = gauge.Gauge(self, 0, 100)
 
         for item in connection.supported_commands:
-            listbox.insert(tk.END, item)
+            print(item)
