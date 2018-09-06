@@ -23,7 +23,9 @@ class Gauge:
         self.arc_low = 140
         self.arc_high = 410
         val = low
-        for theta in range(self.arc_low, self.arc_high, int((self.arc_high-self.arc_low)/((high-low + 1)/subtick))):
+        inc = (self.arc_high-self.arc_low)/((high-low + 1)/subtick)
+        theta = self.arc_low
+        while theta < self.arc_high:
             theta_rad = math.radians(theta)
             x = math.cos(theta_rad)
             y = math.sin(theta_rad)
@@ -46,14 +48,15 @@ class Gauge:
                 self.canvas.create_text(tx, ty, text=val)
 
             val += subtick
+            theta += inc
 
-        self.setDialValue(0)
+        self.set_dial_value(0)
 
         self.canvas.pack()
 
-    def setDialValue(self, val):
-        mult = val * (self.arc_high - self.arc_low) / ((self.high - self.low + 1) / self.subtick)
+    def set_dial_value(self, val):
+        mult = self.arc_low + (val * (self.arc_high - self.arc_low) / ((self.high - self.low + 1) / self.subtick))
         theta_rad = math.radians(mult)
         x = math.cos(theta_rad)
         y = math.sin(theta_rad)
-        self.canvas.coords(self.dial, self.width/2, self.height/2, (x * 25) + self.width/2, (y * 25) + self.height/2)
+        self.canvas.coords(self.dial, self.width/2, self.height/2, (x*125) + (self.width/2), (y*125) + (self.height/2))
