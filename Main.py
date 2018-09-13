@@ -24,23 +24,24 @@ class Main(tk.Tk):
         navBarFrame.grid_columnconfigure(3, weight=1)
 
         b = tk.Button(navBarFrame, justify=tk.LEFT, borderwidth=0, command=lambda: self.button_callback(0))
-        self.navIcon = tk.PhotoImage(file="res/icons/nav_icon_96.png")
-        b.config(image=self.navIcon, width="96", height="96", bg='#282a36', activebackground='#282a36')
+        self.navIcon = tk.PhotoImage(file="res/icons/nav_icon_48.png")
+        b.config(image=self.navIcon, width="48", height="48", bg='#282a36', activebackground='#282a36')
         b.grid(row=1, column=0)
 
         b = tk.Button(navBarFrame, justify=tk.LEFT, borderwidth=0, command=lambda: self.button_callback(1))
-        self.infoIcon = tk.PhotoImage(file="res/icons/info_icon_96.png")
-        b.config(image=self.infoIcon, width="96", height="96", bg='#282a36', activebackground='#282a36')
+        self.infoIcon = tk.PhotoImage(file="res/icons/info_icon_48.png")
+        b.config(image=self.infoIcon, width="48", height="48", bg='#282a36', activebackground='#282a36')
         b.grid(row=1, column=1)
 
         b = tk.Button(navBarFrame, justify=tk.LEFT, borderwidth=0, command=lambda: self.button_callback(2))
-        self.audioIcon = tk.PhotoImage(file="res/icons/audio_icon_96.png")
-        b.config(image=self.audioIcon, width="96", height="96", bg='#282a36', activebackground='#282a36')
+        self.audioIcon = tk.PhotoImage(file="res/icons/audio_icon_48.png")
+        self.audioIcon.subsample(2, 2)
+        b.config(image=self.audioIcon, width="48", height="48", bg='#282a36', activebackground='#282a36')
         b.grid(row=1, column=2)
 
         b = tk.Button(navBarFrame, justify=tk.LEFT, borderwidth=0, command=lambda: self.button_callback(3))
-        self.settingsIcon = tk.PhotoImage(file="res/icons/settings_icon_96.png")
-        b.config(image=self.settingsIcon, width="96", height="96", bg='#282a36', activebackground='#282a36')
+        self.settingsIcon = tk.PhotoImage(file="res/icons/settings_icon_48.png")
+        b.config(image=self.settingsIcon, width="48", height="48", bg='#282a36', activebackground='#282a36')
         b.grid(row=1, column=3)
 
         self.frames = {}
@@ -70,5 +71,6 @@ class Main(tk.Tk):
 
 if __name__ == "__main__":
     app = Main()
-    app.attributes('-fullscreen', True)
+    app.geometry('800x480')
+    #app.attributes('-fullscreen', True)
     app.mainloop()
