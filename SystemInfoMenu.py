@@ -1,6 +1,6 @@
 import tkinter as tk
 import obd
-import widgets.Gauge as gauge
+import widgets.Gauge as Gauge
 import serial
 
 
@@ -11,6 +11,12 @@ class SystemInfoMenu(tk.Frame):
         self.connection = None
         self.controller = controller
         self.connect_odb()
+        self.side_menu_visible = False
+        self.side_menu_container = tk.Frame(master=self, bg='#282a36')
+        b1 = tk.Button(self.side_menu_container)
+        self.menu_button = tk.Button(self, justify=tk.LEFT, borderwidth=0, command=self.toggle_side_meu)
+        b1.grid(row=0, column=0, padx=10, pady=10)
+        self.side_menu_container.grid(row=0, column=1, padx=10, pady=10)
 
     def connect_odb(self):
         #TODO: Add some sort of loading signal
@@ -33,4 +39,11 @@ class SystemInfoMenu(tk.Frame):
             self.controller.after(10000, self.connect_odb)
 
     def add_obd_widgets(self):
-        self.test_gauge = gauge.Gauge(self, 0, 100, 10, 1)
+        self.test_gauge = Gauge.Gauge(self, 0, 100, 10, 1)
+
+    def toggle_side_meu(self):
+        self.side_menu_visible = not self.side_menu_visible
+        if self.side_menu_visible:
+            self.side_menu_container.pack()
+        else:
+            self.side_menu_container.pack_forget()
