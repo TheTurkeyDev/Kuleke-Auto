@@ -2,7 +2,6 @@ import tkinter as tk
 import SystemInfoMenu as SIM
 import SettingsMenu as SM
 
-
 class Main(tk.Tk):
 
     def __init__(self, *args, **kwargs):

@@ -17,5 +17,9 @@ class SettingsMenu(tk.Frame):
         w.set(screen.get_actual_brightness())
         w.grid(row=0, column=0, padx=10, pady=10)
 
+        if screen.get_max_brightness() == 0:
+            w.config(state="disabled")
+
     def update_brightness(self, val):
-        screen.set_brightness(int((int(val) / 100) * screen.get_max_brightness()))
+        if screen.get_max_brightness() > 0:
+            screen.set_brightness(int((int(val) / 100) * screen.get_max_brightness()))
