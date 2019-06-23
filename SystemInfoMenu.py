@@ -1,7 +1,7 @@
 import tkinter as tk
 import obd
 from obd.decoders import pid, single_dtc
-import widgets.Gauge as Gauge
+import widgets.OBDValueWidget as OBDValueWidget
 import serial
 
 
@@ -19,10 +19,9 @@ class SystemInfoMenu(tk.Frame):
 
         new_widget_button = tk.Button(self, text="+", justify=tk.RIGHT, borderwidth=0, command=self.new_widget)
         new_widget_button.grid(row=0, column=0, padx=10, pady=10)
-        self.add_obd_widgets()
 
     def connect_odb(self):
-        #TODO: Add some sort of loading signal
+        # TODO: Add some sort of loading signal
         ports = obd.scan_serial()
         for port in ports:
 
@@ -36,17 +35,18 @@ class SystemInfoMenu(tk.Frame):
                 break
 
         if self.connection is not None and self.connection.is_connected():
-            self.update_obd_widgets()
+            self.add_obd_widgets()
         else:
             print("Failed to find OBD2 device! Retrying in 10 seconds")
             self.controller.after(10000, self.connect_odb)
 
     def add_obd_widgets(self):
-        test = Gauge.Gauge(self.widgets_canvas, 0, 100, 10, 1)
-        self.widgets.append(test)
-
-    def update_obd_widgets(self):
-        print("here")
+        # self.widgets.append(Gauge.Gauge(self.widgets_canvas, 0, 100, 10, 1))
+        for command in obd.commands.modes[1]:
+            if command.decode != pid and command.decode != single_dtc:
+                if self.connection is not None and self.connection.is_connected() and not obd.commands.has_command(command):
+                    self.widgets.append(OBDValueWidget.OBDValueWidget(self.widgets_canvas, command))
+        print("Adding")
 
     def new_widget(self):
         widget_win = tk.Toplevel()
@@ -73,6 +73,7 @@ class SystemInfoMenu(tk.Frame):
         for command in obd.commands.modes[1]:
             if command.decode != pid and command.decode != single_dtc:
                 text = command.name
-                if self.connection is not None and self.connection.is_connected() and not obd.commands.has_command(command):
+                if self.connection is not None and self.connection.is_connected() and not obd.commands.has_command(
+                        command):
                     text += " (Not Supported)"
                 listbox.insert(tk.END, text)

@@ -1,6 +1,7 @@
 import tkinter as tk
-import SystemInfoMenu as SIM
 import SettingsMenu as SM
+import SystemInfoMenu as SIM
+
 
 class Main(tk.Tk):
 
@@ -71,5 +72,5 @@ class Main(tk.Tk):
 if __name__ == "__main__":
     app = Main()
     app.geometry('800x480')
-    #app.attributes('-fullscreen', True)
+    # app.attributes('-fullscreen', True)
     app.mainloop()
